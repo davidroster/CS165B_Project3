@@ -121,8 +121,27 @@ def run_train_test(training_file, testing_file):
 
     y_predict = model.predict(X_test)
 
-    x = accuracy_score(y_test, y_predict)
-    print(x)
+    y_predict_list = y_predict.tolist()
+    y_test_list = y_test.tolist()
+    print(y_test_list)
+    print(y_predict_list)
+
+    Accuracy = accuracy_score(y_test, y_predict)
+    Error_Rate = (1 - Accuracy)
+    # True_Negatives = 0
+    # True_Positives = 0
+    # False_Negatives = 0
+    # False_Positives = 0
+
+    True_Positives, False_Positives, True_Negatives, False_Negatives = perf_measure(y_test_list, y_predict_list)
+    # True_Positives, False_Positives, True_Negatives, False_Negatives = perf_measure(y_test_list, y_predict_list)
+
+    print("True positives:", True_Positives)
+    print("True negatives:", True_Negatives)
+    print("False positives:", False_Positives)
+    print("False negatives:", False_Negatives)
+    print("Error rate:", Error_Rate)
+
 
     #USE THIS ARTICLE
 
@@ -133,15 +152,60 @@ def run_train_test(training_file, testing_file):
 
     # # Train Decision Tree Classifer
     # clf = clf.fit(X_train,y_test)
-    
+
     # #Predict the response for test dataset
     # y_pred = clf.predict(y_test)
 
     # print(y_pred)
 
 
+
+    '''
+    Example:
+        return {
+            "gini":{
+                'True positives':0,
+                'True negatives':0,
+                'False positives':0,
+                'False negatives':0,
+                'Error rate':0.00
+                },
+            "entropy":{
+                'True positives':0,
+                'True negatives':0,
+                'False positives':0,
+                'False negatives':0,
+                'Error rate':0.00}
+                }
+    '''
+
+
     pass
 
+def perf_measure(y_actual, y_hat):
+    TP = 0
+    FP = 0
+    TN = 0
+    FN = 0
+
+    print("y_actual", y_actual)
+    print("y_hat", y_hat)
+
+    for i in range(len(y_hat)):
+        print("Entering loop")
+        print("y_actual", y_actual[i])
+        print("y_hat", y_hat[i])
+
+        if y_actual[i]==y_hat[i]==1:
+           TP += 1
+        if y_hat[i]==1 and y_actual[i]!=y_hat[i]:
+           FP += 1
+        if y_actual[i]==y_hat[i]==0:
+           TN += 1
+        if y_hat[i]==0 and y_actual[i]!=y_hat[i]:
+           FN += 1
+
+    return(TP, FP, TN, FN)
 
 
 #######
