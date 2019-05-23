@@ -143,8 +143,8 @@ def run_train_test(training_file, testing_file):
 
     trim_matrix = trim_matrix[1:]
     NON_GM_Vector_Test = np.array(trim_matrix)
-    new_matrix_testing = pd.read_csv(testing_file, delim_whitespace=True, index_col='#')
-    new_GM_Vector_Test = new_matrix_testing[new_matrix_testing.columns[:-1]]
+    new_matrix_testing = pd.read_csv(testing_file, delim_whitespace=True, index_col='#', usecols = ['#', 'Budget', 'Genre', 'FamousActors', 'Director'])
+    new_GM_Vector_Test = new_matrix_testing[new_matrix_testing.columns] #.Columns
     print("NON_GM_Vector_Test")
     print(NON_GM_Vector_Test)
 
