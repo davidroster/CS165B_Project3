@@ -83,6 +83,10 @@ def run_train_test(training_file, testing_file):
         trim_matrix.append(row[:-1])
 
     trim_matrix = trim_matrix[1:]
+
+    # for item in trim_matrix:
+    #     trim_matrix[item].pop(0)
+
     NON_GM_Vector_Train = np.array(trim_matrix)
     # NON_GM_Vector_Train = NON_GM_Vector_Train[:, [1:]]
 
@@ -137,6 +141,7 @@ def run_train_test(training_file, testing_file):
         trim_matrix.append(row[:-1])
 
     trim_matrix = trim_matrix[1:]
+
     NON_GM_Vector_Test = np.array(trim_matrix)
     print("NON_GM_Vector_Train")
     print(NON_GM_Vector_Test)
@@ -248,7 +253,7 @@ def Values_Calculator(Y_Answer, Y_predicted):
     print("Y_predicted")
     print(Y_predicted)
 
-    for i in range(len(Y_predicted)):
+    for i in range(1, len(Y_predicted)):
         print("Entering loop")
         print("Y_Answer", Y_Answer[i])
         print("Y_predicted", Y_predicted[i])
