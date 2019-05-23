@@ -1,6 +1,6 @@
 # Starter code for CS 165B HW3
 import numpy as np
-import pandas as pd
+# import pandas as pd
 from sklearn.tree import DecisionTreeClassifier # Import Decision Tree Classifier
 from sklearn.model_selection import train_test_split # Import train_test_split function
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
@@ -84,15 +84,10 @@ def run_train_test(training_file, testing_file):
 
     trim_matrix = trim_matrix[1:]
     NON_GM_Vector_Train = np.array(trim_matrix)
-
-
-    #Numpy has been difficult, going to try pandas
-    new_matrix_training = pd.read_csv(training_file, delim_whitespace=True, index_col='#')
-    new_GM_Vector_train = new_matrix_training[new_matrix_training.columns[:-1]]
-
-
-    # NON_GM_Vector_Train = NON_GM_Vector_Train[:,1:]
     # NON_GM_Vector_Train = NON_GM_Vector_Train[:, [1:]]
+
+
+    #Trying to use Pandas because I cant remove "#" column with numpy for some reason
 
     print("NON_GM_Vector_Train")
     print(NON_GM_Vector_Train)
@@ -143,9 +138,7 @@ def run_train_test(training_file, testing_file):
 
     trim_matrix = trim_matrix[1:]
     NON_GM_Vector_Test = np.array(trim_matrix)
-    new_matrix_testing = pd.read_csv(testing_file, delim_whitespace=True, index_col='#', usecols = ['#', 'Budget', 'Genre', 'FamousActors', 'Director'])
-    new_GM_Vector_Test = new_matrix_testing[new_matrix_testing.columns] #.Columns
-    print("NON_GM_Vector_Test")
+    print("NON_GM_Vector_Train")
     print(NON_GM_Vector_Test)
 
 
@@ -153,8 +146,8 @@ def run_train_test(training_file, testing_file):
     #Decision Tree Work
     #Gini
     gini_model = tree.DecisionTreeClassifier(random_state = 0)
-    gini_model.fit(new_GM_Vector_train, GM_Vector_train)
-    gini_y_predict = gini_model.predict(new_GM_Vector_Test)
+    gini_model.fit(NON_GM_Vector_Train, GM_Vector_train)
+    gini_y_predict = gini_model.predict(NON_GM_Vector_Test)
 
     gini_y_predict_list = gini_y_predict.tolist()
     GM_Vector_test_list = GM_Vector_test.tolist()
@@ -166,8 +159,8 @@ def run_train_test(training_file, testing_file):
 
     #entropy
     entropy_model = tree.DecisionTreeClassifier(criterion="entropy", random_state = 0)
-    entropy_model.fit(new_GM_Vector_train, GM_Vector_train)
-    entropy_y_predict = entropy_model.predict(new_GM_Vector_Test)
+    entropy_model.fit(NON_GM_Vector_Train, GM_Vector_train)
+    entropy_y_predict = entropy_model.predict(NON_GM_Vector_Test)
 
     entropy_y_predict_list = entropy_y_predict.tolist()
     GM_Vector_test_list = GM_Vector_test.tolist()
@@ -215,7 +208,7 @@ def run_train_test(training_file, testing_file):
     # clf = DecisionTreeClassifier()
 
     # # Train Decision Tree Classifer
-    # clf = clf.fit(new_GM_Vector_train,GM_Vector_test)
+    # clf = clf.fit(NON_GM_Vector_Train,GM_Vector_test)
 
     # #Predict the response for test dataset
     # y_pred = clf.predict(GM_Vector_test)
